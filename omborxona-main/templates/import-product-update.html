@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% block title_page %} Kirimlar {% endblock %}
+{% block import_product_active %} active {% endblock %}
+
+{% block content %}
+    <form method="post" id="edit-product-form" class="col-md-10">
+        {% csrf_token %}
+         <div class="modal-body">
+             <label for="product">Nom:</label>
+             <select name="product_id" id="product" class="form-control" >
+                 {% for product in products %}
+                    <option value="{{ product.id }}">{{ product.name }} -- {{ product.brand }}</option>
+                 {% endfor %}
+             </select>
+             <br>
+             <label for="quantity">Miqdor:</label>
+             <input type="number" name="quantity" id="quantity" class="form-control" required>
+             <br>
+             <label for="buy_price">Sotib olish(so'm):</label>
+             <input type="number" name="buy_price" placeholder="Sotib olish narxi..." id="buy_price" class="form-control" required>
+             <br>
+             <label for="sell_price">Sotish(so'm):</label>
+             <input type="number" name="sell_price" placeholder="Sotish narxi..." id="sell_price" class="form-control">
+             <br>
+         </div>
+
+        <!-- Modal footer -->
+        <button type="submit" class="btn btn-success">Yangilash</button>
+        <a href="{% url 'import-products' %}">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Yopish</button>
+        </a>
+
+    </form>
+
+{% endblock %}

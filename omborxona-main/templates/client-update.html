@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% block title_page %} Mijozlar {% endblock %}
+{% block client_active %} active {% endblock %}
+
+{% block content %}
+    <form method="post" id="edit-product-form" class="col-md-12">
+        {% csrf_token %}
+        <label for="name">To'liq ism:</label>
+        <input type="text" name="name" value="{{ client.name }}" id="name" class="form-control" required>
+        <br>
+        <label for="shop_name">Do'kon:</label>
+        <input type="text" name="shop_name" {% if client.shop_name %} value="{{ client.shop_name }}" {% endif %}
+               id="shop_name" class="form-control">
+        <br>
+        <label for="phone_number">Telefon raqam:</label>
+        <input type="text" name="phone_number" value="{{ client.phone_number }}" id="phone_number"
+               class="form-control" required>
+        <br>
+        <label for="address">Manzil:</label>
+        <input type="text" name="address" {% if client.address %} value="{{ client.address }}" {% endif %} id="address"
+               class="form-control" required>
+        <br>
+        <label for="debt">Qarzdorlik:</label>
+        <input type="text" name="debt" value="{{ client.debt }}" id="debt" class="form-control" required>
+        <br>
+
+        <!-- Modal footer -->
+        <button type="submit" class="btn btn-success">Yangilash</button>
+        <a href="{% url 'clients' %}">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Yopish</button>
+        </a>
+
+    </form>
+
+{% endblock %}

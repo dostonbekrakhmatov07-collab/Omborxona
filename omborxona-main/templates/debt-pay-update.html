@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %} Qarzni tahrirlash {% endblock %}
+{% block title_page %} Qarzni tahrirlash {% endblock %}
+
+{% block content %}
+
+<div class="col-md-8">
+    <div class="card card-dark">
+
+        <div class="card-header">
+            Qarzni tahrirlash
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="card-body">
+
+                <label>Mijoz</label>
+                <select name="client_id" class="form-control">
+
+                    {% for client in clients %}
+                    <option value="{{ client.id }}"
+                    {% if client.id == debt_pay.client.id %} selected {% endif %}>
+
+                        {{ client.name }} -- {{ client.shop_name }}
+
+                    </option>
+                    {% endfor %}
+
+                </select>
+
+                <br>
+
+                <label>To'lov miqdori</label>
+                <input type="number" name="amount"
+                       value="{{ debt_pay.amount }}"
+                       class="form-control">
+
+                <br>
+
+                <label>Izoh</label>
+                <textarea name="description" class="form-control">
+{{ debt_pay.description }}
+                </textarea>
+
+            </div>
+
+            <div class="card-footer">
+
+                <button class="btn btn-success">
+                    Saqlash
+                </button>
+
+                <a href="{% url 'debt-pays' %}" class="btn btn-danger">
+                    Bekor qilish
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

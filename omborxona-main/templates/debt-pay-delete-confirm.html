@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %} Qarzni o'chirish {% endblock %}
+{% block title_page %} Qarzni o'chirish {% endblock %}
+
+{% block content %}
+
+<div class="col-md-6">
+
+    <div class="card card-danger">
+
+        <div class="card-header">
+            Qarzni o'chirish
+        </div>
+
+        <form method="post" action="{% url 'debt-pay-delete' debt_pay.id %}">
+            {% csrf_token %}
+
+            <div class="card-body">
+
+                <h5>
+                    Rostdan ham ushbu to'lovni o'chirmoqchimisiz?
+                </h5>
+
+                <br>
+
+                <p>
+                    <b>Mijoz:</b> {{ debt_pay.client.name }}
+                </p>
+
+                <p>
+                    <b>To'lov:</b> {{ debt_pay.amount }} so'm
+                </p>
+
+                <p>
+                    <b>Izoh:</b> {{ debt_pay.description }}
+                </p>
+
+            </div>
+
+            <div class="card-footer">
+
+                <button class="btn btn-danger">
+                    Ha, o'chirish
+                </button>
+
+                <a href="{% url 'debt-pays' %}" class="btn btn-secondary">
+                    Bekor qilish
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% block title_page %}{{ product.name }} mahsulotini o'chirishni tasdiqlang: {% endblock %}
+{% block product_active %} active {% endblock %}
+
+{% block content %}
+    <div class="col-md-12">
+        <a href="{% url 'products' %}">
+            <button type="submit" class="btn btn-secondary">Bekor qilish</button>
+        </a>
+        <a href="{% url 'product-delete' product.id %}">
+            <button type="button" class="btn btn-danger">O'chirish</button>
+        </a>
+    </div>
+
+{% endblock %}

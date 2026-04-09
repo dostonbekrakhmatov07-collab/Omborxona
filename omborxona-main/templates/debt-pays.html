@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %} To'langan qarzlar {% endblock %}
+{% block title_page %} To'langan qarzlar {% endblock %}
+{% block debt-active %} active {% endblock %}
+
+{% block content %}
+
+    <div class="col-md-12">
+        <div class="card card-dark">
+            <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        Qarzni qoplash
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table" style="text-align: center;">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="width: 15px">T/r</th>
+                        <th scope="col" style="width: 255px; text-align: center;">Mijoz</th>
+                        <th scope="col" style="text-align: center;">To'lov miqdori</th>
+                        <th scope="col" style="text-align: center;">Izoh</th>
+                        <th scope="col" style="text-align: center;">Sana</th>
+                        <th scope="col" style="text-align: center;">Xodim</th>
+                        <th scope="col" style="text-align: center;">Harakatlar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for debt_pay in debt_pays %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ debt_pay.client.name }}</td>
+                            <td>{{ debt_pay.amount}} so'm</td>
+                            <td>{{ debt_pay.description}}</td>
+                            <td>{{ debt_pay.created_at|date:"d.m.Y H:i"}}</td>
+                            <td>{{ debt_pay.user}}</td>
+                            <td>
+                                <a href="{% url 'debt-pay-update' debt_pay.id %}">
+                                    <button type="submit" class="btn btn-warning" data-toggle="modal">Tahrirlash
+                                    </button>
+                                </a>
+                                <a href="{% url 'debt-pay-confirm-delete' debt_pay.id %}">
+                                    <button type="submit" class="btn btn-danger" data-toggle="modal">O'chirish</button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header bg-dark">
+                    <h4 class="modal-title">Qarzni qoplash</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <form id="new-pay-form" method="post">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <label for="client">Mijoz:</label>
+                        <select name="client_id" id="client" class="form-control">
+                            {% for client in clients %}
+                                <option value="{{ client.id }}">{{ client.name }} -- {{ client.shop_name }} -- {{ client.debt }} so'm</option>
+                            {% endfor %}
+                        </select>
+                        <br>
+                        <label for="amount">To'lov miqdori(so'm):</label>
+                        <input type="number" name="amount" value="0" id="amount" class="form-control">
+                        <br>
+                        <label for="description">Izoh:</label>
+                        <textarea name="description" placeholder="Izohingizni kiriting..." id="description" class="form-control" required></textarea>
+                        <br>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Qo`shish</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Yopish</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- ./wrapper -->
+{% endblock %}

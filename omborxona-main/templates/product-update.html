@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% block title_page %} Mahsulotlar {% endblock %}
+{% block product_active %} active {% endblock %}
+
+{% block content %}
+    <form method="post" id="edit-product-form" class="col-md-10">
+        {% csrf_token %}
+        <label for="name">Nom:</label>
+        <input type="text" name="name" value="{{ product.name }}" id="name" class="form-control" required>
+        <br>
+        <label for="brand">Brend:</label>
+        <input type="text" name="brand" {% if product.brand %} value="{{ product.brand }}" {% endif %}
+               id="brand" class="form-control">
+        <br>
+        <label for="price">Narx:</label>
+        <input type="number" name="price" value="{{ product.price }}" id="price"
+               class="form-control" required>
+        <br>
+        <label for="quantity">Miqdor:</label>
+        <input type="number" name="quantity" {% if product.quantity %} value="{{ product.quantity }}" {% endif %} id="quantity"
+               class="form-control" required>
+        <br>
+        <label for="unit">O'lchov birlik:</label>
+        <input type="text" name="unit" id="unit" value="dona" class="form-control" required>
+        <br>
+
+        <!-- Modal footer -->
+        <button type="submit" class="btn btn-success">Yangilash</button>
+        <a href="{% url 'products' %}">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Yopish</button>
+        </a>
+
+    </form>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% block title_page %} Mijoz {{ client.name }} ma'lumotlarini o'chirishni tasdiqlang: {% endblock %}
+{% block client_active %} active {% endblock %}
+
+{% block content %}
+    <div class="col-md-12">
+        <a href="{% url 'clients' %}">
+            <button type="submit" class="btn btn-secondary">Bekor qilish</button>
+        </a>
+        <a href="{% url 'client-delete' client.id %}">
+            <button type="button" class="btn btn-danger">O'chirish</button>
+        </a>
+    </div>
+
+{% endblock %}
